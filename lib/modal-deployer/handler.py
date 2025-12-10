@@ -1,0 +1,26 @@
+from crhelper import CfnResource
+import logging
+
+logger = logging.getLogger(__name__)
+helper = CfnResource(
+    json_logging=False,
+    log_level='DEBUG',
+    boto_level='CRITICAL',
+    sleep_on_delete=120,
+    ssl_verify=None
+)
+
+
+@helper.create
+@helper.update
+def deploy(event, context):
+    pass
+
+
+@helper.delete
+def stop(event, context):
+    pass
+
+
+def handler(event, context):
+    helper(event, context)
