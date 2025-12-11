@@ -14,11 +14,13 @@ helper = CfnResource(
 @helper.create
 @helper.update
 def deploy(event, context):
+    logger.info(f'deploying... event: {event}, context: {context}')
     pass
 
 
 @helper.delete
 def stop(event, context):
+    logger.info(f'deploying... event: {event}, context: {context}')
     pass
 
 

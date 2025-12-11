@@ -1,3 +1,2 @@
 crhelper
 modal
-awswrangler
