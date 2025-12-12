@@ -1,5 +1,7 @@
+import os
 from crhelper import CfnResource
 import logging
+import subprocess
 
 logger = logging.getLogger(__name__)
 helper = CfnResource(
@@ -9,6 +11,12 @@ helper = CfnResource(
     sleep_on_delete=120,
     ssl_verify=None
 )
+
+
+def setup_modal_credentials():
+    subprocess.run(
+        ['modal', 'token', 'set']
+    )
 
 
 @helper.create
