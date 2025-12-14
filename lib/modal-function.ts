@@ -17,23 +17,79 @@ import {
   ServicePrincipal,
 } from 'aws-cdk-lib/aws-iam';
 
+/**
+ * Properties for creating a ModalFunction construct.
+ */
 export interface ModalFunctionProps {
+  /**
+   * The name of the Modal function to invoke. Must match the function name
+   * in your deployed Modal app exactly.
+   */
   readonly functionName: string;
+
+  /**
+   * How to invoke the Modal function.
+   */
   readonly integrationPattern: ModalIntegration;
+
+  /**
+   * Configuration for connecting to your Modal application.
+   */
   readonly modalConfig: ModalConfig;
+
+  /**
+   * Static parameters passed to every Modal function invocation.
+   * These are passed as the second argument to your Modal function.
+   *
+   * @default {}
+   */
   readonly params?: Record<string, any>;
+
+  /**
+   * Delimiter inserted between the function name and integration pattern
+   * when generating AWS resource names.
+   *
+   * @default ''
+   */
   readonly delimiter?: string;
+
+  /**
+   * Custom IAM execution role for the Lambda bridge function.
+   * The role must have permission to invoke Secrets Manager.
+   *
+   * @default - A new role is created with basic Lambda execution permissions
+   */
   readonly executionRole?: Role;
+
+  /**
+   * The Python runtime for the Lambda bridge function.
+   *
+   * @default Runtime.PYTHON_3_12
+   */
   readonly lambdaRuntime?: Runtime;
+
+  /**
+   * Timeout for the Lambda bridge function. For `Remote` integration,
+   * this should be longer than your Modal function's expected execution time.
+   *
+   * @default Duration.minutes(5)
+   */
   readonly lambdaTimeout?: Duration;
+
+  /**
+   * An existing OIDC provider for Modal. Reuse this across multiple
+   * ModalFunction constructs to avoid creating duplicate providers.
+   *
+   * @default - A new OIDC provider for oidc.modal.com is created
+   */
   readonly oidcProvider?: OpenIdConnectProvider;
 }
 
 export class ModalFunction extends Construct implements IGrantable {
   private readonly executionRole: Role;
-  private readonly handler: Function;
   private readonly oidcProvider: OpenIdConnectProvider;
-  public grantPrincipal: IPrincipal;
+  public readonly grantPrincipal: IPrincipal;
+  public readonly handler: Function;
 
   constructor(
     scope: Construct,
@@ -71,7 +127,7 @@ export class ModalFunction extends Construct implements IGrantable {
     this.handler = new PythonFunction(this, 'ModalFunctionHandler', {
       functionName: functionIdentifier,
       role: this.executionRole,
-      runtime: this.props.lambdaRuntime ?? Runtime.PYTHON_3_10,
+      runtime: this.props.lambdaRuntime ?? Runtime.PYTHON_3_12,
       timeout: this.props.lambdaTimeout ?? Duration.minutes(5),
       entry: join(__dirname, '../lib/handlers/modal-function'),
       environment: {

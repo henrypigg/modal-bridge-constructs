@@ -1,14 +1,46 @@
 {
   "name": "modal-bridge-constructs",
   "version": "0.1.0",
+  "description": "AWS CDK constructs for integrating Modal serverless GPU/CPU functions with AWS services",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "license": "Apache-2.0",
+  "author": "Henry Pigg",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/henrypigg/modal-bridge-constructs.git"
+  },
+  "homepage": "https://github.com/henrypigg/modal-bridge-constructs#readme",
+  "bugs": {
+    "url": "https://github.com/henrypigg/modal-bridge-constructs/issues"
+  },
+  "keywords": [
+    "aws",
+    "cdk",
+    "modal",
+    "serverless",
+    "gpu",
+    "lambda",
+    "constructs",
+    "infrastructure",
+    "iac"
+  ],
+  "engines": {
+    "node": ">= 18"
+  },
+  "files": [
+    "dist",
+    "lib/handlers",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "prepublishOnly": "npm run build && npm run test"
   },
   "dependencies": {
     "@aws-cdk/aws-lambda-python-alpha": "^2.215.0-alpha.0"
@@ -24,7 +56,7 @@
     "typescript": "~5.6.3"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "2.215.0",
+    "aws-cdk-lib": "^2.100.0",
     "constructs": "^10.0.0"
   }
 }
