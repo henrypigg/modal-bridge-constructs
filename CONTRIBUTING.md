@@ -46,17 +46,20 @@ Please be respectful and constructive in all interactions. We welcome contributo
 ## Development Setup
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/henrypigg/modal-bridge-constructs.git
    cd modal-bridge-constructs/modal-bridge-constructs
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    ```
 
 3. Build the project:
+
    ```bash
    npm run build
    ```
