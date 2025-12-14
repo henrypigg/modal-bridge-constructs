@@ -1,10 +1,13 @@
-import { Secret } from "aws-cdk-lib/aws-secretsmanager"
+import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
 
 export enum ModalIntegration {
-    Spawn = 'spawn', Remote = 'remote'
+  Spawn = 'spawn',
+  Remote = 'remote',
 }
 
 export interface ModalConfig {
-    readonly appId: string
-    readonly tokenSecret?: Secret
+  readonly appName: string;
+  readonly environment: string;
+  readonly workspaceId: string;
+  readonly tokenSecret?: Secret;
 }
