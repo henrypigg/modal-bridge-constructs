@@ -29,7 +29,7 @@ describe('ModalFunction with default props', () => {
   test('creates a Lambda function with correct name and runtime', () => {
     template.hasResourceProperties('AWS::Lambda::Function', {
       FunctionName: 'test_function_remote',
-      Runtime: 'python3.12',
+      Runtime: 'nodejs22.x',
     });
   });
 

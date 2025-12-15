@@ -1,5 +1,4 @@
-import { PythonFunction } from '@aws-cdk/aws-lambda-python-alpha';
-import { Function, IEventSource, Runtime } from 'aws-cdk-lib/aws-lambda';
+import { Code, Function, IEventSource, Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import { join } from 'path';
 import { ModalConfig, ModalIntegration } from './types';
@@ -62,9 +61,9 @@ export interface ModalFunctionProps {
   readonly executionRole?: Role;
 
   /**
-   * The Python runtime for the Lambda bridge function.
+   * The Node.js runtime for the Lambda bridge function.
    *
-   * @default Runtime.PYTHON_3_12
+   * @default Runtime.NODEJS_22_X
    */
   readonly lambdaRuntime?: Runtime;
 
@@ -124,12 +123,13 @@ export class ModalFunction extends Construct implements IGrantable {
       });
     this.grantPrincipal = this.executionRole;
 
-    this.handler = new PythonFunction(this, 'ModalFunctionHandler', {
+    this.handler = new Function(this, 'Handler', {
       functionName: functionIdentifier,
-      role: this.executionRole,
-      runtime: this.props.lambdaRuntime ?? Runtime.PYTHON_3_12,
+      runtime: this.props.lambdaRuntime ?? Runtime.NODEJS_22_X,
+      handler: 'index.handler',
+      code: Code.fromAsset(join(__dirname, 'modal-function-handler')),
       timeout: this.props.lambdaTimeout ?? Duration.minutes(5),
-      entry: join(__dirname, '../lib/handlers/modal-function'),
+      role: this.executionRole,
       environment: {
         MODAL_INTEGRATION_PATTERN: this.props.integrationPattern,
         MODAL_APP_NAME: this.props.modalConfig.appName,
