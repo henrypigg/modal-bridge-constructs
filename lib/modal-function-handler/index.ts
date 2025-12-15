@@ -28,7 +28,8 @@ export const handler = async (event: unknown) => {
   const integrationPattern = process.env.MODAL_INTEGRATION_PATTERN;
 
   console.log(
-    `Calling function "${fn.methodName}" with integration pattern "${integrationPattern}".\nEvent: ${event}\nStatic Params: ${fnParams}`
+    `Calling function "${process.env.MODAL_FUNCTION_NAME}" with integration pattern "${integrationPattern}".\n` +
+      `Event: ${JSON.stringify(event)}\nStatic Params: ${JSON.stringify(fnParams)}`
   );
   if (integrationPattern === 'remote') {
     const result = await fn.remote([event, fnParams]);

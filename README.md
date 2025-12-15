@@ -201,7 +201,6 @@ const modalFunction = new ModalFunction(this, 'ImageProcessor', {
 {
   "status": "Success",
   "response": {
-    // result payload returned from the Modal function
     "processed": true,
     "outputPath": "/mnt/output.png"
   }

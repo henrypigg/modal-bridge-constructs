@@ -1,6 +1,6 @@
 {
   "name": "modal-bridge-constructs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "AWS CDK constructs for integrating Modal serverless GPU/CPU functions with AWS services",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
