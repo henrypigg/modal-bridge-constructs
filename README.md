@@ -178,7 +178,7 @@ const modalFunction = new ModalFunction(this, 'BackgroundProcessor', {
 {
   "status": "Success",
   "response": {
-    "function_call_id": "fc-abc123"
+    "functionCallId": "fc-abc123"
   }
 }
 ```
@@ -201,7 +201,9 @@ const modalFunction = new ModalFunction(this, 'ImageProcessor', {
 {
   "status": "Success",
   "response": {
-    "result": { "processed": true, "output_path": "/mnt/output.png" }
+    // result payload returned from the Modal function
+    "processed": true,
+    "outputPath": "/mnt/output.png"
   }
 }
 ```
